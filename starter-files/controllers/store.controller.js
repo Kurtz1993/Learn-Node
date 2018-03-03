@@ -3,5 +3,5 @@ exports.homePage = (req, res) => {
 };
 
 exports.addStore = (req, res) => {
-  res.render('edit-store', { title: 'Add Store' });
+  res.render('editStore', { title: 'Add Store' });
 };
