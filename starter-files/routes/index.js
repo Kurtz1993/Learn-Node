@@ -58,5 +58,6 @@ router.post('/account/reset/:token',
 
 // API Endpoints
 router.get('/api/search', catchErrors(StoreController.searchStores));
+router.get('/api/stores/near', catchErrors(StoreController.mapStores));
 
 module.exports = router;
