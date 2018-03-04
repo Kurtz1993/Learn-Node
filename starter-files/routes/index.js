@@ -49,5 +49,6 @@ router.get('/account',
   UserController.account
 );
 router.post('/account', catchErrors(UserController.updateAccount));
+router.post('/account/forgot', catchErrors(AuthController.forgot));
 
 module.exports = router;
