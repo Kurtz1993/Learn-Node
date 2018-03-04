@@ -57,6 +57,10 @@ catchErrors(AuthController.update)
 );
 
 router.get('/map', StoreController.mapPage);
+router.get('/hearts',
+  AuthController.isLoggedIn,
+  catchErrors(StoreController.hearts)
+);
 
 // API Endpoints
 router.get('/api/search', catchErrors(StoreController.searchStores));
