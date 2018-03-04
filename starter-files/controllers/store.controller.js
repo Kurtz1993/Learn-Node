@@ -18,3 +18,11 @@ exports.getStores = async (req, res) => {
 
   res.render('stores', { title: 'Stores', stores });
 };
+
+exports.editStore = async (req, res) => {
+  const { id } = req.params;
+
+  const store = await Store.findById(id);
+
+  res.render('editStore', { title: `Edit ${store.name}`, store });
+};
