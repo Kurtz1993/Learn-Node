@@ -3,6 +3,7 @@ const router = express.Router();
 
 const StoreController = require('../controllers/store.controller');
 const UserController = require('../controllers/user.controller');
+const AuthController = require('../controllers/auth.controller');
 const { catchErrors } = require('../handlers/errorHandlers');
 
 // Do work here
@@ -35,7 +36,9 @@ router.post('/login',
 
 router.get('/register', UserController.registerForm);
 router.post('/register',
-  UserController.validateRegister
+  UserController.validateRegister,
+  catchErrors(UserController.register),
+  AuthController.login
 );
 
 module.exports = router;
