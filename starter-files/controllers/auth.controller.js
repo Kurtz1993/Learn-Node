@@ -35,7 +35,7 @@ exports.forgot = async (req, res) => {
   }
   // 2.- Set reset tokens and expiry on their account.
   user.resetPasswordToken = crypto.randomBytes(20).toString('hex');
-  user.resetPasswordExpires = Date.now() + 360000;
+  user.resetPasswordExpires = Date.now() + 3600000;
   await user.save();
   // 3.- Send email with the token.
   const resetURL = `http://${req.headers.host}/account/reset/${user.resetPasswordToken}`;
