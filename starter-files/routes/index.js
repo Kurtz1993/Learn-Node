@@ -50,5 +50,6 @@ router.get('/account',
 );
 router.post('/account', catchErrors(UserController.updateAccount));
 router.post('/account/forgot', catchErrors(AuthController.forgot));
+router.get('/account/reset/:token', catchErrors(AuthController.reset));
 
 module.exports = router;
