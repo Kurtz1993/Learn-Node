@@ -11,7 +11,10 @@ router.get('/', catchErrors(StoreController.getStores));
 router.get('/stores', catchErrors(StoreController.getStores));
 router.get('/stores/:id/edit', catchErrors(StoreController.editStore));
 
-router.get('/add', StoreController.addStore);
+router.get('/add',
+  AuthController.isLoggedIn,
+  StoreController.addStore
+);
 router.post('/add',
   StoreController.upload,
   catchErrors(StoreController.resize),
