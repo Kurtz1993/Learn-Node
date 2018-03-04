@@ -12,18 +12,18 @@ router.get('/stores', catchErrors(StoreController.getStores));
 router.get('/stores/:id/edit', catchErrors(StoreController.editStore));
 
 router.get('/add',
-  AuthController.isLoggedIn,
-  StoreController.addStore
+AuthController.isLoggedIn,
+StoreController.addStore
 );
 router.post('/add',
-  StoreController.upload,
-  catchErrors(StoreController.resize),
-  catchErrors(StoreController.createStore)
+StoreController.upload,
+catchErrors(StoreController.resize),
+catchErrors(StoreController.createStore)
 );
 router.post('/add/:id',
-  StoreController.upload,
-  catchErrors(StoreController.resize),
-  catchErrors(StoreController.updateStore)
+StoreController.upload,
+catchErrors(StoreController.resize),
+catchErrors(StoreController.updateStore)
 );
 
 router.get('/store/:slug', catchErrors(StoreController.getStoreBySlug));
@@ -37,23 +37,23 @@ router.post('/login', AuthController.login);
 
 router.get('/register', UserController.registerForm);
 router.post('/register',
-  UserController.validateRegister,
-  catchErrors(UserController.register),
-  AuthController.login
+UserController.validateRegister,
+catchErrors(UserController.register),
+AuthController.login
 );
 
 router.get('/logout', AuthController.logout);
 
 router.get('/account',
-  AuthController.isLoggedIn,
-  UserController.account
+AuthController.isLoggedIn,
+UserController.account
 );
 router.post('/account', catchErrors(UserController.updateAccount));
 router.post('/account/forgot', catchErrors(AuthController.forgot));
 router.get('/account/reset/:token', catchErrors(AuthController.reset));
 router.post('/account/reset/:token',
-  AuthController.confirmedPasswords,
-  catchErrors(AuthController.update)
+AuthController.confirmedPasswords,
+catchErrors(AuthController.update)
 );
 
 router.get('/map', StoreController.mapPage);
@@ -61,5 +61,6 @@ router.get('/map', StoreController.mapPage);
 // API Endpoints
 router.get('/api/search', catchErrors(StoreController.searchStores));
 router.get('/api/stores/near', catchErrors(StoreController.mapStores));
+router.post('/api/stores/:id/heart', catchErrors(StoreController.heartStore));
 
 module.exports = router;
