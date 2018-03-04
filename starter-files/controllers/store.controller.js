@@ -114,6 +114,7 @@ exports.searchStores = async (req, res) => {
       $search: req.query.q
     }
   }, {
+    // Project a score based on the metadata stored in the index.
       score: { $meta: 'textScore' }
     })
     .sort({
