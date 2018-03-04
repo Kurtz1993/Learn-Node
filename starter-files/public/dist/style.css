@@ -575,7 +575,8 @@ label {
         flex: 1; }
   .flash__remove {
     background: none;
-    border: 0; }
+    border: 0;
+    cursor: pointer; }
     .flash__remove:hover {
       color: #FFC40E; }
   .flash:after {
