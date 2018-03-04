@@ -108,6 +108,7 @@ exports.getStoresByTag = async (req, res) => {
 };
 
 exports.searchStores = async (req, res) => {
+  // This will search in every field marked as a text index.
   const stores = await Store.find({
     $text: {
       $search: req.query.q
