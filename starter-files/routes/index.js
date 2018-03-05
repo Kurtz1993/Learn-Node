@@ -11,19 +11,18 @@ router.get('/', catchErrors(StoreController.getStores));
 router.get('/stores', catchErrors(StoreController.getStores));
 router.get('/stores/:id/edit', catchErrors(StoreController.editStore));
 
-router.get('/add',
-AuthController.isLoggedIn,
-StoreController.addStore
+router.get('/add', AuthController.isLoggedIn, StoreController.addStore);
+router.post(
+  '/add',
+  StoreController.upload,
+  catchErrors(StoreController.resize),
+  catchErrors(StoreController.createStore)
 );
-router.post('/add',
-StoreController.upload,
-catchErrors(StoreController.resize),
-catchErrors(StoreController.createStore)
-);
-router.post('/add/:id',
-StoreController.upload,
-catchErrors(StoreController.resize),
-catchErrors(StoreController.updateStore)
+router.post(
+  '/add/:id',
+  StoreController.upload,
+  catchErrors(StoreController.resize),
+  catchErrors(StoreController.updateStore)
 );
 
 router.get('/store/:slug', catchErrors(StoreController.getStoreBySlug));
@@ -36,31 +35,27 @@ router.get('/login', UserController.loginForm);
 router.post('/login', AuthController.login);
 
 router.get('/register', UserController.registerForm);
-router.post('/register',
-UserController.validateRegister,
-catchErrors(UserController.register),
-AuthController.login
+router.post(
+  '/register',
+  UserController.validateRegister,
+  catchErrors(UserController.register),
+  AuthController.login
 );
 
 router.get('/logout', AuthController.logout);
 
-router.get('/account',
-AuthController.isLoggedIn,
-UserController.account
-);
+router.get('/account', AuthController.isLoggedIn, UserController.account);
 router.post('/account', catchErrors(UserController.updateAccount));
 router.post('/account/forgot', catchErrors(AuthController.forgot));
 router.get('/account/reset/:token', catchErrors(AuthController.reset));
-router.post('/account/reset/:token',
-AuthController.confirmedPasswords,
-catchErrors(AuthController.update)
+router.post(
+  '/account/reset/:token',
+  AuthController.confirmedPasswords,
+  catchErrors(AuthController.update)
 );
 
 router.get('/map', StoreController.mapPage);
-router.get('/hearts',
-  AuthController.isLoggedIn,
-  catchErrors(StoreController.hearts)
-);
+router.get('/hearts', AuthController.isLoggedIn, catchErrors(StoreController.hearts));
 
 // API Endpoints
 router.get('/api/search', catchErrors(StoreController.searchStores));

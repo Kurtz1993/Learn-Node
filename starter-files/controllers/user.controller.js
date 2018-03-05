@@ -21,7 +21,8 @@ exports.validateRegister = (req, res, next) => {
   });
   req.checkBody('password', 'Password cannot be blank!').notEmpty();
   req.checkBody('password-confirm', 'Confirm Password cannot be blank!').notEmpty();
-  req.checkBody('password-confirm', 'Whoops! Your passwords do not match')
+  req
+    .checkBody('password-confirm', 'Whoops! Your passwords do not match')
     .equals(req.body.password);
 
   const errors = req.validationErrors();

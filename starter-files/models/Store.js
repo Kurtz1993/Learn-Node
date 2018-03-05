@@ -23,10 +23,12 @@ const storeSchema = Schema({
       type: String,
       default: 'Point'
     },
-    coordinates: [{
-      type: Number,
-      required: 'You must supply coordinates.'
-    }],
+    coordinates: [
+      {
+        type: Number,
+        required: 'You must supply coordinates.'
+      }
+    ],
     address: {
       type: String,
       required: 'You must supply an address.'
@@ -50,7 +52,7 @@ storeSchema.index({
   location: '2dsphere'
 });
 
-storeSchema.pre('save', async function (next) {
+storeSchema.pre('save', async function(next) {
   if (!this.isModified('name')) return next();
 
   this.slug = slug(this.name);
