@@ -50,7 +50,7 @@ exports.createStore = async (req, res) => {
 
 exports.getStores = async (req, res) => {
   // Query DB for a list of all stores.
-  const stores = await Store.find();
+  const stores = await Store.find().populate('reviews');
 
   res.render('stores', { title: 'Stores', stores });
 };
