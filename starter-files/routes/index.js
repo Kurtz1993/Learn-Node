@@ -4,6 +4,7 @@ const router = express.Router();
 const StoreController = require('../controllers/store.controller');
 const UserController = require('../controllers/user.controller');
 const AuthController = require('../controllers/auth.controller');
+const ReviewController = require('../controllers/review.controller');
 const { catchErrors } = require('../handlers/errorHandlers');
 
 // Do work here
@@ -56,6 +57,10 @@ router.post(
 
 router.get('/map', StoreController.mapPage);
 router.get('/hearts', AuthController.isLoggedIn, catchErrors(StoreController.hearts));
+router.post('/reviews/:id',
+  AuthController.isLoggedIn,
+  catchErrors(ReviewController.addReview)
+);
 
 // API Endpoints
 router.get('/api/search', catchErrors(StoreController.searchStores));
