@@ -62,6 +62,8 @@ router.post('/reviews/:id',
   catchErrors(ReviewController.addReview)
 );
 
+router.get('/top', catchErrors(StoreController.getTopStores));
+
 // API Endpoints
 router.get('/api/search', catchErrors(StoreController.searchStores));
 router.get('/api/stores/near', catchErrors(StoreController.mapStores));
