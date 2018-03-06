@@ -10,6 +10,7 @@ const { catchErrors } = require('../handlers/errorHandlers');
 // Do work here
 router.get('/', catchErrors(StoreController.getStores));
 router.get('/stores', catchErrors(StoreController.getStores));
+router.get('/stores/page/:page', catchErrors(StoreController.getStores));
 router.get('/stores/:id/edit', catchErrors(StoreController.editStore));
 
 router.get('/add', AuthController.isLoggedIn, StoreController.addStore);
