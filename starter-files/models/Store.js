@@ -81,6 +81,30 @@ storeSchema.statics.getTagsList = function getTagsList() {
   ]);
 };
 
+storeSchema.statics.getTopStores = function getTopStores() {
+  return this.aggregate([
+    // Lookup stores and populate their reviews
+    { $lookup: { from: 'reviews', localField: '_id', foreignField: 'store', as: 'reviews' } },
+    // Filter for only items that have 2 or more reviews
+    { $match: { 'reviews.1': { $exists: true } } },
+    // Add the average reviews field
+    {
+      // Could use $addFields to just add the average rating field
+      // Requires MongoDB 3.4+
+      $project: {
+        photo: '$$ROOT.photo',
+        name: '$$ROOT.name',
+        reviews: '$$ROOT.reviews',
+        averageRating: { $avg: '$reviews.rating' },
+      },
+    },
+    // Sort it by our new field, highest reviews first
+    { $sort: { averageRating: -1 } },
+    // Limit to at most 10
+    { $limit: 10 },
+  ]);
+};
+
 // Find reviews where the sotres _id property === reviews store property
 storeSchema.virtual('reviews', {
   ref: 'Review', // What model will be linked?
