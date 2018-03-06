@@ -15,7 +15,7 @@ const multerOptions = {
     } else {
       next({ message: "That file isn't allowed!" }, false);
     }
-  }
+  },
 };
 
 exports.addStore = (req, res) => {
@@ -78,7 +78,7 @@ exports.updateStore = async (req, res) => {
 
   const store = await Store.findOneAndUpdate({ _id: id }, req.body, {
     new: true,
-    runValidators: true
+    runValidators: true,
   }).exec();
 
   req.flash(
@@ -91,8 +91,7 @@ exports.updateStore = async (req, res) => {
 
 exports.getStoreBySlug = async (req, res, next) => {
   const { slug } = req.params;
-  const store = await Store.findOne({ slug })
-    .populate('author reviews');
+  const store = await Store.findOne({ slug }).populate('author reviews');
 
   if (!store) return next();
 
@@ -116,16 +115,16 @@ exports.searchStores = async (req, res) => {
   const stores = await Store.find(
     {
       $text: {
-        $search: req.query.q
-      }
+        $search: req.query.q,
+      },
     },
     {
       // Project a score based on the metadata stored in the index.
-      score: { $meta: 'textScore' }
+      score: { $meta: 'textScore' },
     }
   )
     .sort({
-      score: { $meta: 'textScore' }
+      score: { $meta: 'textScore' },
     })
     .limit(5);
 
@@ -140,11 +139,11 @@ exports.mapStores = async (req, res) => {
       $near: {
         $geometry: {
           type: 'Point',
-          coordinates
+          coordinates,
         },
-        $maxDistance: 10000 // 1 = 1m
-      }
-    }
+        $maxDistance: 10000, // 1 = 1m
+      },
+    },
   };
 
   const stores = await Store.find(q)
@@ -173,8 +172,14 @@ exports.heartStore = async (req, res) => {
 
 exports.hearts = async (req, res) => {
   const stores = await Store.find({
-    _id: { $in: req.user.hearts }
+    _id: { $in: req.user.hearts },
   });
 
   res.render('stores', { title: 'Hearts', stores });
+};
+
+exports.getTopStores = async (req, res) => {
+  const stores = await Store.getTopStores();
+
+  res.render('topStores', { title: '★ Top Stores!', stores });
 };
